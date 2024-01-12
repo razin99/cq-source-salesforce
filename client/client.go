@@ -22,7 +22,12 @@ func (c *Client) Logger() *zerolog.Logger {
 }
 
 func New(ctx context.Context, logger zerolog.Logger, s *Spec) (Client, error) {
-	sfc := simpleforce.NewClient(s.Endpoint, simpleforce.DefaultClientID, "v59.0")
+	apiVersion := simpleforce.DefaultAPIVersion
+	if s.APIVersion != "" {
+		apiVersion = s.APIVersion
+	}
+
+	sfc := simpleforce.NewClient(s.Endpoint, simpleforce.DefaultClientID, apiVersion)
 
 	if err := sfc.LoginPassword(s.Username, s.Password, s.Token); err != nil {
 		return Client{}, err
