@@ -76,7 +76,10 @@ func (*Client) Close(_ context.Context) error {
 
 func getTables() schema.Tables {
 	tables := schema.Tables{
-		services.SampleTable(),
+		services.KrowTeamTable(),
+		services.KrowProjectResourcesTable(),
+		services.KrowLocationTable(),
+		services.FixedAssetTable(),
 	}
 	if err := transformers.TransformTables(tables); err != nil {
 		panic(err)

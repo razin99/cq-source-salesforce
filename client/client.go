@@ -4,16 +4,17 @@ import (
 	"context"
 
 	"github.com/rs/zerolog"
+	"github.com/simpleforce/simpleforce"
 )
 
 type Client struct {
-	logger zerolog.Logger
-	Spec   Spec
+	logger     zerolog.Logger
+	Spec       Spec
+	SalesForce *simpleforce.Client
 }
 
 func (c *Client) ID() string {
-	// TODO: Change to either your plugin name or a unique dynamic identifier
-	return "ID"
+	return "SalesForce"
 }
 
 func (c *Client) Logger() *zerolog.Logger {
@@ -21,10 +22,16 @@ func (c *Client) Logger() *zerolog.Logger {
 }
 
 func New(ctx context.Context, logger zerolog.Logger, s *Spec) (Client, error) {
-	// TODO: Add your client initialization here
+	sfc := simpleforce.NewClient(s.Endpoint, simpleforce.DefaultClientID, "v59.0")
+
+	if err := sfc.LoginPassword(s.Username, s.Password, s.Token); err != nil {
+		return Client{}, err
+	}
+
 	c := Client{
-		logger: logger,
-		Spec:   *s,
+		logger:     logger,
+		Spec:       *s,
+		SalesForce: sfc,
 	}
 
 	return c, nil
