@@ -16,5 +16,5 @@ The primary key for this table is **id**.
 |employment_start_date__c|`utf8`|
 |employment_end_date__c|`utf8`|
 |krow__team__c|`utf8`|
-|krow__active__c|`utf8`|
+|krow__active__c|`bool`|
 |krow__location__c|`utf8`|
