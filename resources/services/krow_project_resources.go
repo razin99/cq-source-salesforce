@@ -9,20 +9,23 @@ import (
 )
 
 type KrowProjectResourcesModel struct {
-	ID                  string `json:"id"`
-	Name                string `json:"name"`
-	Email               string `json:"user_email__c"`
-	EmploymentStartDate string `json:"employment_start_date__c"`
-	EmploymentEndDate   string `json:"employment_end_date__c"`
-	Team                string `json:"krow__team__c"`
-	Active              string `json:"krow__active__c"`
-	Location            string `json:"krow__location__c"`
+	Id                       string `json:"id"`
+	Name                     string `json:"name"`
+	User_Email__c            string `json:"user_email__c"`
+	Employment_Start_Date__c string `json:"employment_start_date__c"`
+	Employment_End_Date__c   string `json:"employment_end_date__c"`
+	Krow__Team__c            string `json:"krow__team__c"`
+	Krow__Active__c          bool   `json:"krow__active__c"`
+	Krow__Location__c        string `json:"krow__location__c"`
 }
 
 func KrowProjectResourcesTable() *schema.Table {
 	return &schema.Table{
-		Name:      "salesforce_krow_project_resources",
-		Transform: transformers.TransformWithStruct(&KrowProjectResourcesModel{}, transformers.WithPrimaryKeys("ID")),
+		Name: "salesforce_krow_project_resources",
+		Transform: transformers.TransformWithStruct(
+			&KrowProjectResourcesModel{},
+			transformers.WithPrimaryKeys("Id"),
+		),
 		Resolver: func(ctx context.Context, meta schema.ClientMeta, parent *schema.Resource, res chan<- any) error {
 			cl := meta.(*client.Client)
 			return queryGetAll(

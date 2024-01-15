@@ -9,14 +9,17 @@ import (
 )
 
 type KrowLocationModel struct {
-	ID   string `json:"id"`
+	Id   string `json:"id"`
 	Name string `json:"name"`
 }
 
 func KrowLocationTable() *schema.Table {
 	return &schema.Table{
-		Name:      "salesforce_krow_location",
-		Transform: transformers.TransformWithStruct(&KrowTeamModel{}, transformers.WithPrimaryKeys("ID")),
+		Name: "salesforce_krow_location",
+		Transform: transformers.TransformWithStruct(
+			&KrowLocationModel{},
+			transformers.WithPrimaryKeys("Id"),
+		),
 		Resolver: func(ctx context.Context, meta schema.ClientMeta, parent *schema.Resource, res chan<- any) error {
 			cl := meta.(*client.Client)
 			return queryGetAll(

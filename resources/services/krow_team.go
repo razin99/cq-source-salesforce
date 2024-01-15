@@ -9,14 +9,17 @@ import (
 )
 
 type KrowTeamModel struct {
-	ID   string `json:"id"`
+	Id   string `json:"id"`
 	Name string `json:"name"`
 }
 
 func KrowTeamTable() *schema.Table {
 	return &schema.Table{
-		Name:      "salesforce_krow_team",
-		Transform: transformers.TransformWithStruct(&KrowTeamModel{}, transformers.WithPrimaryKeys("ID")),
+		Name: "salesforce_krow_team",
+		Transform: transformers.TransformWithStruct(
+			&KrowTeamModel{},
+			transformers.WithPrimaryKeys("Id"),
+		),
 		Resolver: func(ctx context.Context, meta schema.ClientMeta, parent *schema.Resource, res chan<- any) error {
 			cl := meta.(*client.Client)
 			return queryGetAll("select id, name from krow__team__c", cl.SalesForce, res)
