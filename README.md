@@ -18,6 +18,7 @@ The following source configuration file will sync to a PostgreSQL database. See 
 kind: source
 spec:
   name: salesforce
+  registry: github
   path: razin99/salesforce
   version: "${VERSION}"
   destinations:
